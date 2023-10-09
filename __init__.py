@@ -6,7 +6,6 @@ from azure.storage.blob import BlobServiceClient
 from azure.storage.blob import BlobType
 
 
-
 def main(mytimer: func.TimerRequest) -> None:
     utc_timestamp = datetime.datetime.utcnow().replace(
         tzinfo=datetime.timezone.utc).isoformat()
