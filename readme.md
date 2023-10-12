@@ -4,6 +4,8 @@ An Azure function app that reads and writes data to a blob (txt file) in Azure b
 
 This is a simple function app that executes every 15 minutes based on a <a href="https://github.com/Ndarugaa/Azure-Function-App-to-Read-and-Write-to-Blob-Storage/tree/main/TimerTrigger1">Timer Trigger </a>. <br>Each time the function app runs, a random number between 1 - 10 is generated. The number is then logged to the text file along with the time it was generated and a random word.
 
+The numbers should be generated <strong>only once</strong> and saved into the log file. The Function checks if a number exists and generates it if it doesn't exist otherwise it skipps the number.
+
 ## Prerequisites
 <ul>
   <li>Azure Account</li>

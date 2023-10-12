@@ -13,9 +13,6 @@ def main(mytimer: func.TimerRequest) -> None:
         print("The timer is past due!")
 
     # Connect to Azure Blob Storage
-    connection_string = "DefaultEndpointsProtocol=https;AccountName=telegram1downloads;AccountKey=Zo5Upi+prHmobzttXaEMs9vJpnLtO4lICsfzb++EOyZCDq69W3qmmlkroqxVrJYYNdkHV/L8pV2w+AStS9LytQ==;EndpointSuffix=core.windows.net"
-    container_name = "mytestcontainer"
-    blob_name = "loggg" # File to log data
 
     # connection_string = "Your Connection String"
     # container_name = "Container name"
@@ -34,9 +31,11 @@ def main(mytimer: func.TimerRequest) -> None:
     # Check if the blob exists, and create it if it doesn't
     if not blob_client.exists():
         blob_client.upload_blob(b"", blob_type=BlobType.BlockBlob)
+        blob_client.upload_blob(log_header, overwrite=True)
+
 
     # Generate a random number and a random word
-    num = str(random.choice(range(1, 10)))
+    num = str(random.choice(range(1, 15)))
     random_word = random.choice(['apple', 'banana', 'cherry', 'date', 'elderberry'])
 
     # Create the data string with current time, number, and random word
@@ -48,9 +47,11 @@ def main(mytimer: func.TimerRequest) -> None:
         
         # Convert the existing data to a string and split it into lines
         existing_lines = existing_data.decode('utf-8').strip().split('\n')
+        numbers = [sublist[1] for sublist in [string.split(',') for string in existing_lines]]
+        logging.info(numbers)
         
         # Check if the generated number already exists in the existing data
-        if any(num in line for line in existing_lines):
+        if num in numbers:
             logging.warning(f"Number {num} already exists in the blob. Skipping.")
             return
 
