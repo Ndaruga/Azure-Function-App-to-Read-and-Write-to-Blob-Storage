@@ -13,14 +13,27 @@ def main(mytimer: func.TimerRequest) -> None:
         print("The timer is past due!")
 
     # Connect to Azure Blob Storage
-    connection_string = "Your Connection String"
-    container_name = "Container name"
-    blob_name = "Blob name" # File to log data
+    connection_string = "DefaultEndpointsProtocol=https;AccountName=telegram1downloads;AccountKey=Zo5Upi+prHmobzttXaEMs9vJpnLtO4lICsfzb++EOyZCDq69W3qmmlkroqxVrJYYNdkHV/L8pV2w+AStS9LytQ==;EndpointSuffix=core.windows.net"
+    container_name = "mytestcontainer"
+    blob_name = "loggg" # File to log data
+
+    # connection_string = "Your Connection String"
+    # container_name = "Container name"
+    # blob_name = "Blob name" # File to log data
 
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
+    # Check if the container exists, and create it if it doesn't
+    container_client = blob_service_client.get_container_client(container_name)
+    if not container_client.exists(500):
+        container_client.create_container()
+
     # Get a reference to the block blob
     blob_client = blob_service_client.get_blob_client(container_name, blob_name)
+
+    # Check if the blob exists, and create it if it doesn't
+    if not blob_client.exists(500):
+        blob_client.upload_blob(b"", blob_type=BlobType.BlockBlob)
 
     # Generate a random number and a random word
     num = str(random.choice(range(1, 10)))

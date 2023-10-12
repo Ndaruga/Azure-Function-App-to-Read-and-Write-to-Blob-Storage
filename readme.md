@@ -32,7 +32,8 @@ The connection String is important for connecting your function app to the blob 
 
 > 4. Paste the connection string to the `__init__.py` file, in the `connection string` variable in `line 16`
 
-#### 3. Blob Storage - Container Name
+#### 3. Blob Storage - Container Name & Blob-name
 > 1. In the `__init__.py` file
 > 2. In line 17 change the `container name` variable to your desired container name.
 > 3. In line 18, Change the `blob name` variable to the desired blob name
+<h6><strong>Note: </strong>The following characters are not allowed in container names: uppercase letters, spaces, and special characters such as #, %, and &</h6>
