@@ -25,14 +25,14 @@ def main(mytimer: func.TimerRequest) -> None:
 
     # Check if the container exists, and create it if it doesn't
     container_client = blob_service_client.get_container_client(container_name)
-    if not container_client.exists(500):
+    if not container_client.exists():
         container_client.create_container()
 
     # Get a reference to the block blob
     blob_client = blob_service_client.get_blob_client(container_name, blob_name)
 
     # Check if the blob exists, and create it if it doesn't
-    if not blob_client.exists(500):
+    if not blob_client.exists():
         blob_client.upload_blob(b"", blob_type=BlobType.BlockBlob)
 
     # Generate a random number and a random word
