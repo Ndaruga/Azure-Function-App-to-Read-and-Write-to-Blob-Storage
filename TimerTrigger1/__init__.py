@@ -13,10 +13,9 @@ def main(mytimer: func.TimerRequest) -> None:
         print("The timer is past due!")
 
     # Connect to Azure Blob Storage
-
-    # connection_string = "Your Connection String"
-    # container_name = "Container name"
-    # blob_name = "Blob name" # File to log data
+    connection_string = "Your Connection String"
+    container_name = "Container name"
+    blob_name = "Blob name" # File to log data
 
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
@@ -30,27 +29,27 @@ def main(mytimer: func.TimerRequest) -> None:
 
     # Check if the blob exists, and create it if it doesn't
     if not blob_client.exists():
-        blob_client.upload_blob(b"", blob_type=BlobType.BlockBlob)
-        blob_client.upload_blob(log_header, overwrite=True)
+        column_titles = "Time, Number, Random_Word"
+        blob_client.upload_blob(column_titles, blob_type=BlobType.BlockBlob)
 
 
     # Generate a random number and a random word
-    num = str(random.choice(range(1, 15)))
-    random_word = random.choice(['apple', 'banana', 'cherry', 'date', 'elderberry'])
+    num = random.choice(range(1, 10))
+    random_word = random.choice(['apple', 'banana', 'cherry', 'mango', 'strawberry'])
 
     # Create the data string with current time, number, and random word
     data = f"{utc_timestamp}, {num}, {random_word}"
 
     try:
-        # Read the existing data from the blob (if it exists)
+        # Read the existing data from the blob
         existing_data = blob_client.download_blob().readall() if blob_client.exists() else b""
         
         # Convert the existing data to a string and split it into lines
         existing_lines = existing_data.decode('utf-8').strip().split('\n')
-        numbers = [sublist[1] for sublist in [string.split(',') for string in existing_lines]]
-        logging.info(numbers)
+        numbers = [sublist[1] for sublist in [string.split(',') for string in existing_lines]][1:]
+        numbers = [int(x) for x in numbers]
         
-        # Check if the generated number already exists in the existing data
+        # Check if the generated number exists in the existing data
         if num in numbers:
             logging.warning(f"Number {num} already exists in the blob. Skipping.")
             return
