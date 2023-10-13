@@ -74,7 +74,7 @@ Open the `TimerTrigger`
 
 In the Function App menu that appears, click on `Monitor` 
 
-Notice that the function executes after every minute. <a href="https://github.com/Ndarugaa/Azure-Function-App-to-Read-and-Write-to-Blob-Storage/tree/main/TimerTrigger1">Read More Here </a>
+Notice that the function executes after `every 15 minutes`. <a href="https://github.com/Ndarugaa/Azure-Function-App-to-Read-and-Write-to-Blob-Storage/tree/main/TimerTrigger1">Read More Here </a>
 
 
 
